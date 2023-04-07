@@ -4,6 +4,7 @@ let jogadas = 0;
 let primeiraCarta;
 let segundaCarta;
 let pontos = 0;
+let reiniciar = false;
 
 while (numeroCartas < 4 || numeroCartas % 2 != 0 || numeroCartas > 14)
    numeroCartas = prompt("Informe a quantidade de cartas (min:4, max:14):");
@@ -51,17 +52,19 @@ function clickCard(card){
       else
          segundaCarta = card;
       cartasViradasJogada++;
-   }
-   if (cartasViradasJogada == 2) {
-      if(primeiraCarta.querySelector(".back-face").innerHTML == segundaCarta.querySelector(".back-face").innerHTML)
-      {
-         pontos += 2;
-         cartasViradasJogada = 0;
-         jogadas++;
-         console.log(pontos);
-      }   
-      else
-         setTimeout(notAMatch, 1000);
+      jogadas++;
+      if (cartasViradasJogada == 2) {
+         if(primeiraCarta.querySelector(".back-face").innerHTML == segundaCarta.querySelector(".back-face").innerHTML)
+         {
+            pontos += 2;
+            cartasViradasJogada = 0;
+            console.log(pontos);
+            if(pontos == numeroCartas)
+               setTimeout(ganhou, 100);
+         }   
+         else
+            setTimeout(notAMatch, 1000);
+      }
    }
 }
 
@@ -69,7 +72,12 @@ function notAMatch() {
    flipCard(primeiraCarta);
    flipCard(segundaCarta);
    cartasViradasJogada = 0;
-   jogadas++;
+}
+
+function ganhou(){
+   alert(`Você ganhou em ${jogadas} jogadas!`);
+   reiniciar = prompt("Gostaria de reiniciar a partida?");
+   
 }
 
 function flipCard(card){
