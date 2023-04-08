@@ -6,6 +6,7 @@ let jogadas = 0;
 let pontos = 0;
 let tempoDeJogo;
 let idInterval;
+let reiniciar = "sim";
 
 iniciarJogo();
 
@@ -58,24 +59,27 @@ function comparador() {
 
 
 function clickCard(card){
-   if (cartasViradasJogada == 0 || (cartasViradasJogada == 1 && card != primeiraCarta) ){
-      flipCard(card);
-      if (cartasViradasJogada == 0)
-         primeiraCarta = card;
-      else
-         segundaCarta = card;
-      cartasViradasJogada++;
-      jogadas++;
-      if (cartasViradasJogada == 2) {
-         if(primeiraCarta.querySelector(".back-face").innerHTML == segundaCarta.querySelector(".back-face").innerHTML)
-         {
-            pontos += 2;
-            cartasViradasJogada = 0;
-            if(pontos == numeroCartas)
-               setTimeout(ganhou, 100);
-         }   
+   if (reiniciar == "sim")
+   {
+      if (cartasViradasJogada == 0 || (cartasViradasJogada == 1 && card != primeiraCarta) ){
+         flipCard(card);
+         if (cartasViradasJogada == 0)
+            primeiraCarta = card;
          else
-            setTimeout(notAMatch, 1000);
+            segundaCarta = card;
+         cartasViradasJogada++;
+         jogadas++;
+         if (cartasViradasJogada == 2) {
+            if(primeiraCarta.querySelector(".back-face").innerHTML == segundaCarta.querySelector(".back-face").innerHTML)
+            {
+               pontos += 2;
+               cartasViradasJogada = 0;
+               if(pontos == numeroCartas)
+                  setTimeout(ganhou, 100);
+            }   
+            else
+               setTimeout(notAMatch, 1000);
+         }
       }
    }
 }
@@ -89,11 +93,11 @@ function notAMatch() {
 function ganhou(){
    clearInterval(idInterval);
    alert(`Você ganhou em ${jogadas} jogadas! A duração do jogo foi de ${tempoDeJogo} segundos!`);
-   let reiniciar = "";
+   reiniciar = "";
    while (reiniciar != "sim" && reiniciar != "não")
-      reiniciar = prompt("Gostaria de reiniciar a partida? (sim ou não)");
+      reiniciar = prompt("Você gostaria de reiniciar a partida? (sim ou não)");
    if (reiniciar == "sim")
-      iniciarJogo();     
+      iniciarJogo();
 }
 
 function flipCard(card){
