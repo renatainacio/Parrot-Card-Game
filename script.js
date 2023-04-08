@@ -58,7 +58,7 @@ function comparador() {
 
 
 function clickCard(card){
-   if (cartasViradasJogada <= 1) {
+   if (cartasViradasJogada == 0 || (cartasViradasJogada == 1 && card != primeiraCarta) ){
       flipCard(card);
       if (cartasViradasJogada == 0)
          primeiraCarta = card;
@@ -91,7 +91,7 @@ function ganhou(){
    alert(`Você ganhou em ${jogadas} jogadas! A duração do jogo foi de ${tempoDeJogo} segundos!`);
    let reiniciar = "";
    while (reiniciar != "sim" && reiniciar != "não")
-      reiniciar = prompt("Gostaria de reiniciar a partida?");
+      reiniciar = prompt("Gostaria de reiniciar a partida? (sim ou não)");
    if (reiniciar == "sim")
       iniciarJogo();     
 }
