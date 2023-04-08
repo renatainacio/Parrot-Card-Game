@@ -40,10 +40,10 @@ function iniciarJogo() {
       document.querySelector(".cards").innerHTML += `
       <div class="card" onclick="clickCard(this)" data-test="card">
          <div class="front-face face">
-            <img src="img/back.png"/>
+            <img src="img/back.png" data-test="face-down-image"/>
          </div>
          <div class="back-face face">
-            <img src="${imagensGameAtual[i]}"/>
+            <img src="${imagensGameAtual[i]}" data-test="face-up-image"/>
          </div>
       </div>
       `
