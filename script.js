@@ -1,48 +1,60 @@
+let primeiraCarta;
+let segundaCarta;
 let numeroCartas = 0;
 let cartasViradasJogada = 0;
 let jogadas = 0;
-let primeiraCarta;
-let segundaCarta;
 let pontos = 0;
-let reiniciar = false;
+let tempoDeJogo;
+let idInterval;
 
-while (numeroCartas < 4 || numeroCartas % 2 != 0 || numeroCartas > 14)
-   numeroCartas = prompt("Informe a quantidade de cartas (min:4, max:14):");
+iniciarJogo();
 
-const gifs = ["img/bobrossparrot.gif",
-               "img/explodyparrot.gif",
-               "img/fiestaparrot.gif",
-               "img/metalparrot.gif",
-               "img/revertitparrot.gif",
-               "img/tripletsparrot.gif",
-               "img/unicornparrot.gif"]
+function iniciarJogo() {
+   numeroCartas = 0;
+   cartasViradasJogada = 0;
+   jogadas = 0;
+   pontos = 0;
+   tempoDeJogo = 0;
+   while (numeroCartas < 4 || numeroCartas % 2 != 0 || numeroCartas > 14)
+      numeroCartas = prompt("Informe a quantidade de cartas (min:4, max:14):");
+   document.querySelector(".cards").innerHTML = "";
+   const gifs = ["img/bobrossparrot.gif",
+                  "img/explodyparrot.gif",
+                  "img/fiestaparrot.gif",
+                  "img/metalparrot.gif",
+                  "img/revertitparrot.gif",
+                  "img/tripletsparrot.gif",
+                  "img/unicornparrot.gif"]
 
-const imagensGameAtual = [];
+   const imagensGameAtual = [];
 
-for(i = 0; i < numeroCartas/2; i++) {
+   for(let i = 0; i < numeroCartas/2; i++) {
 
-   imagensGameAtual.push(gifs[i]);
-   imagensGameAtual.push(gifs[i]);
+      imagensGameAtual.push(gifs[i]);
+      imagensGameAtual.push(gifs[i]);
+   }
+
+   imagensGameAtual.sort(comparador);
+   for (let i = 0; i < numeroCartas; i++) {
+      document.querySelector(".cards").innerHTML += `
+      <div class="card" onclick="clickCard(this)" data-test="card">
+         <div class="front-face face">
+            <img src="img/back.png"/>
+         </div>
+         <div class="back-face face">
+            <img src="${imagensGameAtual[i]}"/>
+         </div>
+      </div>
+      `
+   }
+   idInterval = setInterval(contaTempo, 1000);
 }
 
-imagensGameAtual.sort(comparador);
 
 function comparador() { 
 	return Math.random() - 0.5; 
 }
 
-for (i = 0; i < numeroCartas; i++) {
-   document.querySelector(".cards").innerHTML += `
-   <div class="card" onclick="clickCard(this)">
-      <div class="front-face face">
-         <img src="img/back.png"/>
-      </div>
-      <div class="back-face face">
-         <img src="${imagensGameAtual[i]}"/>
-      </div>
-   </div>
-   `
-}
 
 function clickCard(card){
    if (cartasViradasJogada <= 1) {
@@ -58,7 +70,6 @@ function clickCard(card){
          {
             pontos += 2;
             cartasViradasJogada = 0;
-            console.log(pontos);
             if(pontos == numeroCartas)
                setTimeout(ganhou, 100);
          }   
@@ -75,12 +86,21 @@ function notAMatch() {
 }
 
 function ganhou(){
+   clearInterval(idInterval);
    alert(`Você ganhou em ${jogadas} jogadas!`);
-   reiniciar = prompt("Gostaria de reiniciar a partida?");
-   
+   let reiniciar = "";
+   while (reiniciar != "sim" && reiniciar != "não")
+      reiniciar = prompt("Gostaria de reiniciar a partida?");
+   if (reiniciar == "sim")
+      iniciarJogo();     
 }
 
 function flipCard(card){
    card.querySelector(".front-face").classList.toggle("front");
    card.querySelector(".back-face").classList.toggle("back");
+}
+
+function contaTempo() {
+   tempoDeJogo++;
+   console.log(tempoDeJogo);
 }
