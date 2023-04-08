@@ -18,6 +18,7 @@ function iniciarJogo() {
    while (numeroCartas < 4 || numeroCartas % 2 != 0 || numeroCartas > 14)
       numeroCartas = prompt("Informe a quantidade de cartas (min:4, max:14):");
    document.querySelector(".cards").innerHTML = "";
+   document.querySelector(".relogio").innerHTML = tempoDeJogo;
    const gifs = ["img/bobrossparrot.gif",
                   "img/explodyparrot.gif",
                   "img/fiestaparrot.gif",
@@ -87,7 +88,7 @@ function notAMatch() {
 
 function ganhou(){
    clearInterval(idInterval);
-   alert(`Você ganhou em ${jogadas} jogadas!`);
+   alert(`Você ganhou em ${jogadas} jogadas! A duração do jogo foi de ${tempoDeJogo} segundos!`);
    let reiniciar = "";
    while (reiniciar != "sim" && reiniciar != "não")
       reiniciar = prompt("Gostaria de reiniciar a partida?");
@@ -102,5 +103,5 @@ function flipCard(card){
 
 function contaTempo() {
    tempoDeJogo++;
-   console.log(tempoDeJogo);
+   document.querySelector(".relogio").innerHTML = tempoDeJogo;
 }

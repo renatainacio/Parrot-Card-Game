@@ -3,6 +3,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
 }
 
 .card {
@@ -28,6 +31,18 @@ body {
     transform-style: preserve-3d;
   }
 
+  .relogio {
+    color: #86BD8D;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: -0.004em;
+    width: 46px;
+    height: 47px;
+    position: fixed;
+    top: 16px;
+    right: 8px;
+  }
+
   .back-face {
     transform: rotateY(180deg);
   }
@@ -41,9 +56,6 @@ body {
   }
 
   h1 {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 700;
     font-size: 56px;
     line-height: 66px;
     letter-spacing: -0.004em;
